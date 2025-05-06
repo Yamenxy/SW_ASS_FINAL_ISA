@@ -1,0 +1,51 @@
+Core Functional Requirements (as implemented):
+1. User Roles & Access
+Admin:
+Maintains users (instructors, students).
+Adds courses and assigns instructors.
+
+Instructor:
+Manages assigned courses, lessons, quizzes, assignments, and attendance.
+
+Student:
+Views and registers for courses.
+Sees course content and hands in assignments or quizzes.
+2. Course Management
+Admins and instructors can:
+Add and delete courses.
+Assign instructors.
+Display enrolled students.
+Courses are the most minimal containers for lessons, quizzes, and assignments.
+3. Lesson Management
+Lessons are academic chunks per course.
+
+Teachers add and replace lessons with visible content for enrolled students.
+
+4. Quiz System
+Some courses have quizzes included.
+
+Teachers:
+Create and post quizzes and questions.
+
+Students:
+Offer answers.
+
+View score or comment.
+
+5. Assignment Handling
+Teachers assign courses to students.
+Students turn in assignments for grading.
+
+Grade and feedback feature is likely delivered by assignment submission tracking.
+
+6. Attendance Tracking
+Teachers indicate attendance in courses.
+
+Students may view their attendance record.
+
+7. Notification Module
+There is a straightforward notification facility which offers:
+
+Teachers or the system to notify students of events (e.g., lessons, assignments, announcements).
+
+Primarily through database entries; email/SMS logic can be scheduled or partially installed.
