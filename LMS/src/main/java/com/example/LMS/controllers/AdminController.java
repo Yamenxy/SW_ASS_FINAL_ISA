@@ -31,7 +31,7 @@ public class AdminController {
 
     UserRepository userRepository;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<Object> getAllUsers(Authentication authentication) {
 

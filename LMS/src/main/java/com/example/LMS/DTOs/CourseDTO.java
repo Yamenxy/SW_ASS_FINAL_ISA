@@ -3,7 +3,7 @@ package com.example.LMS.DTOs;
 import com.example.LMS.models.CourseModel;
 import com.example.LMS.models.LessonModel;
 import com.example.LMS.models.StudentModel;
-import jakarta.persistence.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
