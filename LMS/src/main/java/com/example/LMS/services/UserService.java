@@ -36,7 +36,7 @@ public class UserService {
     // Register a new user
     public AuthentictationResponse register(User user)
     {
-
+//yamen 5aser
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
         }
