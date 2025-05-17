@@ -36,5 +36,7 @@ public class UserController {
     @GetMapping("/profiles/{userId}")
     public ResponseEntity<Object> ViewProfile(@PathVariable Integer userId) {
         return ResponseEntity.ok(userService.ViewProfile(userId));
+
+        /// /
     }
 }

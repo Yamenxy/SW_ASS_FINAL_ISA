@@ -34,8 +34,8 @@ public class UserService {
     private final jwtService jwtService;
 
     // Register a new user
-    public AuthentictationResponse register(User user) {
-
+    public AuthentictationResponse register(User user)
+    {
 
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
