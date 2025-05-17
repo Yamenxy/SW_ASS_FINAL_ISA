@@ -10,4 +10,5 @@ public interface AttendanceRepository extends JpaRepository<AttendanceModel, Lon
     List<AttendanceModel> findByLesson(LessonModel lesson);
     List<AttendanceModel> findByStudent(StudentModel student);
     AttendanceModel findByLessonAndStudent(LessonModel lesson, StudentModel student);
+    List<AttendanceModel> findByLessonIn(List<LessonModel> lessons);
 }
