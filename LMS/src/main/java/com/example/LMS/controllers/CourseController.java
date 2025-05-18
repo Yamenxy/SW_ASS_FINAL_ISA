@@ -25,15 +25,21 @@ public class CourseController {
 
     @PostMapping("/createCourse")
     public ResponseEntity<String> createCourse(@RequestBody CourseModel course) {
-        if (course.getListLessons() == null) {
-            course.setListLessons(new ArrayList<>());
-        }
-        if (course.getMediaFiles() == null) {
-            course.setMediaFiles(new ArrayList<>());
-        }
 
-        courseService.createCourse(course);  // Create the course using the service
-        return ResponseEntity.ok("Course created successfully");
+        if (courseService.courseIdExists(course.getCourseId())) {//this feature to check that the course id is unique
+            return ResponseEntity.badRequest().body("Course ID already exists. Please use a unique ID.");
+        } else {
+
+            if (course.getListLessons() == null) {
+                course.setListLessons(new ArrayList<>());
+            }
+            if (course.getMediaFiles() == null) {
+                course.setMediaFiles(new ArrayList<>());
+            }
+
+            courseService.createCourse(course);  // Create the course using the service
+            return ResponseEntity.ok("Course created successfully");
+        }
     }
 
     @PostMapping("/{courseId}/upload-media")

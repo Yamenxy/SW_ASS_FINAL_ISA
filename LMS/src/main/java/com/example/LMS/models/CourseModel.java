@@ -13,6 +13,7 @@ public class CourseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)     //to ensure that the course id is not null and unique
     private String courseId; // String as courseId
     private String title;
     private String description;
@@ -40,6 +41,7 @@ public class CourseModel {
     )
     @JsonIgnore // Prevent circular reference
     private List<StudentModel> students = new ArrayList<>();
+
 
     // Constructors
     public CourseModel(String courseId, String title, String description, int durationHours, List<LessonModel> listLessons, List<String> mediaFiles) {

@@ -13,6 +13,9 @@ public interface CourseRepository extends JpaRepository<CourseModel, Long> {
     CourseModel findByCourseId(String courseId);
      Optional<CourseModel> findByTitle(String title);
 
+    // To ensure that the course id is unique
+    boolean existsByCourseId(String courseId);
+
     @Query("SELECT c FROM CourseModel c JOIN c.students s WHERE s.id = :studentId")
     List<CourseModel> findByStudentId(@Param("studentId") Long studentId);
 
