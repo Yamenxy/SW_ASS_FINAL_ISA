@@ -1,40 +1,34 @@
 package com.example.LMS.services;
+
 import com.example.LMS.models.Assignment;
 import com.example.LMS.repositories.AssignmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import java.util.Collections;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class AssignmentService {
-    @Autowired
-    private AssignmentRepository assignmentRepository;
-    //submit assignment -> student
-    public List<Assignment> getAssignmentsDueIn24Hours() {
-        LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime targetTime = currentTime.plusHours(24);
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+    private final AssignmentRepository assignmentRepository;
 
-        return assignmentRepository.findAssignmentsDueBetween(
-                currentTime.format(formatter),
-                targetTime.format(formatter)
-        );
+    @Autowired
+    public AssignmentService(AssignmentRepository assignmentRepository) {
+        this.assignmentRepository = assignmentRepository;
     }
 
-
-
-
+ 
     public Assignment submitAssignment(Assignment assignment) {
         return assignmentRepository.save(assignment);
     }
 
-    //create assignment ->instructor
+    // create assignment -> instructor
     public void createAssignment(Assignment assignment) {
         assignmentRepository.save(assignment);
     }
@@ -49,4 +43,27 @@ public class AssignmentService {
         }
         return null;
     }
+
+    /** NEW **/
+    /********************************************************************************************/
+    // Reminder feature: notify users before deadline
+    @Scheduled(fixedRate = 3600000) // every hour
+    public void sendDeadlineReminders() {
+        List<Assignment> allAssignments = assignmentRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime nextHour = now.plusHours(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        for (Assignment assignment : allAssignments) {
+            try {
+                LocalDateTime deadline = LocalDateTime.parse(assignment.getDeadline(), formatter);
+                if (deadline.isAfter(now) && deadline.isBefore(nextHour)) {
+                    System.out.println("[Reminder] Assignment '" + assignment.getTitle() + "' is due at " + assignment.getDeadline());
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to parse deadline for assignment ID " + assignment.getAssignmentID());
+            }
+        }
+    }
+    /*********************************************************************************************/
 }

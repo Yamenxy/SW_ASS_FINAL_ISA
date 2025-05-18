@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Arrays;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -28,6 +30,11 @@ public class AssignmentTest {
     private AssignmentRepository assignmentRepository;  // Mock repository
 
     private Assignment testAssignment;  // Regular assignment object
+
+
+
+    @InjectMocks
+    private AssignmentService aservice;
 
     @BeforeEach
     void setUp() {
@@ -88,5 +95,16 @@ public class AssignmentTest {
         verify(assignmentRepository, times(1)).findById(1);
         assertEquals(testAssignment, fetchedAssignment);
     }
+     /**NEW**/
+    /******************************************************************************/
+    @Test
+    void testSendDeadlineReminders() {
+        when(assignmentRepository.findAll()).thenReturn(Arrays.asList(testAssignment));
+        aservice.sendDeadlineReminders();
+        verify(assignmentRepository, times(1)).findAll();
+    }
+   /******************************************************************************/
+
+
 
 }
