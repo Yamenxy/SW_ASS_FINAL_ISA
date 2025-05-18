@@ -93,6 +93,13 @@ public class CourseService {
         return new ArrayList<>(); // Return an empty list if the course is not found
     }
 
+    //    This to check that the course id is unique
+    public boolean courseIdExists(String courseId) {
+        return courseRepository.existsByCourseId(courseId);
+    }
+
+
+
 
 
 }
