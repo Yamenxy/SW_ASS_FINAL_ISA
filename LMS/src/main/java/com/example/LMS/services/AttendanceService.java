@@ -5,6 +5,7 @@ import com.example.LMS.models.CourseModel;
 import com.example.LMS.models.LessonModel;
 import com.example.LMS.models.StudentModel;
 import com.example.LMS.repositories.AttendanceRepository;
+import com.example.LMS.repositories.CourseRepository;
 import com.example.LMS.repositories.LessonRepository;
 import com.example.LMS.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,28 @@ public class AttendanceService {
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
     private LessonRepository lessonRepository;
 
     public List<AttendanceModel> displayAllAttendance() {
         List<AttendanceModel> attendances = attendanceRepository.findAll();
         return attendances;
     }
+    public List<AttendanceModel> getAttendanceByCourse(Long courseId) {
+        CourseModel course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("Course not found for ID: " + courseId));
+        List<LessonModel> lessons = course.getListLessons();
+        if (lessons == null || lessons.isEmpty()) {
+            System.out.println("No lessons found for course ID: " + courseId);
+            return new ArrayList<>();
+        }
+        List<AttendanceModel> attendanceRecords = attendanceRepository.findByLessonIn(lessons);
+        System.out.println("Found " + attendanceRecords.size() + " attendance records for course ID: " + courseId);
+        return attendanceRecords;
+    }
+
     public List<AttendanceModel> displayLessonAttendance(long lessonId) {
         LessonModel lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new IllegalArgumentException("Lesson not found"));

@@ -31,4 +31,11 @@ public class AttendanceController {
     public ResponseEntity<String> attendLesson(@RequestParam int studentId, @RequestParam Long lessonId, @RequestParam String OTP) {
         return ResponseEntity.ok(attendanceService.attendLesson(studentId, lessonId, OTP));
     }
+    @PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
+    @GetMapping("/display-course-attendance/{courseId}")
+    public ResponseEntity<List<AttendanceModel>> displayCourseAttendance(@PathVariable Long courseId) {
+        List<AttendanceModel> attendanceRecords = attendanceService.getAttendanceByCourse(courseId);
+        return ResponseEntity.ok(attendanceRecords);
+    }
+
 }
