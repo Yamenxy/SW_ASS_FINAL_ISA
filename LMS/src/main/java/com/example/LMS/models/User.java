@@ -17,9 +17,9 @@ import java.util.List;
 @Table(name = "_users")
 public class User implements UserDetails {
 
-    public static final String ROLE_ADMIN = "ADMIN";
-    public static final String ROLE_INSTRUCTOR = "INSTRUCTOR";
-    public static final String ROLE_STUDENT = "STUDENT";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_INSTRUCTOR = "ROLE_INSTRUCTOR";
+    public static final String ROLE_STUDENT = "ROLE_STUDENT";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
